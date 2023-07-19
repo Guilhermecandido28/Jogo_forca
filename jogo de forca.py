@@ -4,7 +4,7 @@ def jogar():
     mensagem_bem_vindo()
     palavra_secreta = palavra_chave()
     lista = inicio_forca(palavra_secreta)
-    complexo = dificuldade(palavra_secreta)
+    erros = dificuldade(palavra_secreta)
 
     enforcou = acertou = False
 
@@ -13,9 +13,10 @@ def jogar():
 
 
         if chute.upper() not in palavra_secreta:
-            complexo-=  1
-            print(f'Errou! Tentativas restantes {complexo}.')
-            if complexo == 0:
+            erros-=  1
+            desenha_forca(erros)
+            print(f'Errou! Tentativas restantes {erros}.')
+            if erros == 0:
                 enforcou = True
 
         marcar_acerto(palavra_secreta,chute,lista)
@@ -43,7 +44,7 @@ def palavra_chave():
     palavras = []
     tema = str(input('Escolha do tema da forca. (P) para países, (F) para frutas e (A) para animais: ')).upper().strip()
     if tema == 'F':
-        with open("frutas.txt", "r",encoding='utf-8') as arquivo:
+        with open("frutas.txt", "r") as arquivo:
             for linha in arquivo:
                 linha = linha.strip()
                 palavras.append(linha)
@@ -70,12 +71,12 @@ def dificuldade(palavra):
     dificuldade = str(input('Escolha a dificuldade, (f) para Fácil ou (d) para difícil: ')).upper().strip()
     while True:
         if dificuldade == 'F':
-            erros = 12
+            erros = 7
             print()
             print(f'Você terá {erros} tentativas.')
             return erros
         elif dificuldade == 'D':
-            erros = len(palavra)
+            erros = 7
             print()
             print(f'Você terá apenas {erros} tentativas.')
             return erros
@@ -94,6 +95,55 @@ def marcar_acerto(palavra_secreta,chute,lista):
         if chute.upper() == letra.upper():
             lista[index] = letra
         index += 1
+def desenha_forca(erros):
+    print("  _______     ")
+    print(" |/      |    ")
+
+    if(erros == 6):
+        print(" |      (_)   ")
+        print(" |            ")
+        print(" |            ")
+        print(" |            ")
+
+    if(erros == 5):
+        print(" |      (_)   ")
+        print(" |      \     ")
+        print(" |            ")
+        print(" |            ")
+
+    if(erros == 4):
+        print(" |      (_)   ")
+        print(" |      \|    ")
+        print(" |            ")
+        print(" |            ")
+
+    if(erros == 3):
+        print(" |      (_)   ")
+        print(" |      \|/   ")
+        print(" |            ")
+        print(" |            ")
+
+    if(erros == 2):
+        print(" |      (_)   ")
+        print(" |      \|/   ")
+        print(" |       |    ")
+        print(" |            ")
+
+    if(erros == 1):
+        print(" |      (_)   ")
+        print(" |      \|/   ")
+        print(" |       |    ")
+        print(" |      /     ")
+
+    if (erros == 0):
+        print(" |      (_)   ")
+        print(" |      \|/   ")
+        print(" |       |    ")
+        print(" |      / \   ")
+
+    print(" |            ")
+    print("_|___         ")
+    print()
 
 if(__name__ == "__main__"):
     jogar()
